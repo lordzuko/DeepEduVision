@@ -1,0 +1,20 @@
+<form action="/attendance/mood/" method="post" enctype="multipart/form-data">
+
+	{%  csrf_token %}
+	<input type="file" name="img" />
+
+	<br>
+
+	<input type="text" name="link" />
+
+	<input type="submit" name="submit" />
+
+</form>
+
+
+
+{% for l in content %}
+
+	{{ l.emotions.anger }}
+
+{% endfor %}

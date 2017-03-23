@@ -30,9 +30,11 @@ class Student(models.Model):
 	"""
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	rollno = models.IntegerField(unique=True, blank=False, null=False)
-	first_name = models.CharField(max_length=30)
-	last_name = models.CharField(max_length=30)
-	id_img = models.ImageField(upload_to=upload_in_profiles)
+	first_name = models.CharField(max_length=30, null=True)
+	last_name = models.CharField(max_length=30, null=True)
+	id_img = models.ImageField(upload_to=upload_in_profiles, null=True)
+
+
 
 class Attendance(models.Model):
 	"""

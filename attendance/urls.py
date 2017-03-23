@@ -18,6 +18,6 @@ from django.contrib import admin
 from attendance import views
 
 urlpatterns = [
-    url(r'^', views.attendance_count, name='attendance_count'),
-    url(r'^', views.class_mood, name='class_mood'),
+    #url(r'^', views.attendance_count, name='attendance_count'),
+    url(r'^mood/', views.class_mood, name='class_mood'),
 ]
