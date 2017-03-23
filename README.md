@@ -59,10 +59,10 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-###Front End
+### Front End
 * [Semantic UI](https://github.com/Semantic-Org/Semantic-UI-Docs/) - Framework for front end development
 
-###Back End
+### Back End
 * [Django](https://docs.djangoproject.com/en/1.10/) - The web framework used
 * [Google Vision API](https://cloud.google.com/vision/) - Used for image processing tasks.
 
