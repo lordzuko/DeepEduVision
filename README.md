@@ -59,8 +59,11 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Django](https://docs.djangoproject.com/en/1.10/) - The web framework used
+###Front End
 * [Semantic UI](https://github.com/Semantic-Org/Semantic-UI-Docs/) - Framework for front end development
+
+###Back End
+* [Django](https://docs.djangoproject.com/en/1.10/) - The web framework used
 * [Google Vision API](https://cloud.google.com/vision/) - Used for image processing tasks.
 
 ## Contributing
@@ -79,7 +82,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **Sachin Kukreja** - [sk364](https://github.com/sk364/)
 
-* **Ameya Datar** - [](https://github.com//)
+* **Ameya Datar** - [ameyalfcdatar](https://github.com/ameyalfcdatar/)
 
 * **Kanishka Munshi** - [kmunshi97](https://github.com/kmunshi97/)
 
