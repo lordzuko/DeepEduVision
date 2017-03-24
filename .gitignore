@@ -45,3 +45,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#Django & Python
+*.pyc
+attendance/__pycache__/
+DeepEduVision/__pycache__/
