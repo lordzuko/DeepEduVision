@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-
+from django.http import HttpResponseRedirect, Http404
+from django.contrib.auth.models import User
+from .models import Faculty
+from review.models import *
 from google.cloud import vision
 from PIL import Image, ImageFont, ImageDraw
 import urllib.request
@@ -80,5 +82,34 @@ def class_mood(request):
 			'original_img': 'media/{}'.format(filename),
 			'mod_img': 'media/mod{}'.format(filename)
 		}
+
+	return render(request, template_name, context)
+
+
+def profile(request, user_id):
+	template_name = '404.html'
+	context = {}
+
+	try:
+		user = get_object_or_404(User, pk=user_id)
+	except Http404:
+		return render(request, template_name, context)
+
+	faculty = Faculty.objects.get(user=user)
+
+	is_editable = False
+
+	if request.user.is_authenticated():
+		if user == request.user:
+			is_editable = True
+
+	reviews = Review.objects.filter(object_id=user_id)
+
+	template_name = 'profile.html'
+	context = {
+		'faculty' : faculty,
+		'reviews' : reviews,
+		'is_editable' : is_editable
+	}
 
 	return render(request, template_name, context)
