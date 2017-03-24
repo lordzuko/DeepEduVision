@@ -19,6 +19,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
 	url(r'^$', TemplateView.as_view(template_name='index.html'), name="index"),
+    url(r'^analysis$', TemplateView.as_view(template_name='analysis_upload.html'), name="analysis_upload"),
     url(r'^admin/', admin.site.urls),
     url(r'^attendance/', include('attendance.urls', namespace='attendance'), name='attendance'),
  	url(r'^auth/', include('auth_app.urls', namespace='auth'), name='auth'),

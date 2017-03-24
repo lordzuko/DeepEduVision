@@ -29,7 +29,7 @@
             <br>
             <br>
             
-        <div class="ui two cards" style="margin-left: 5vw;">    
+        <div class="ui two cards" style="margin-left: 20vw;" id="image_upload_card">    
             <div class="ui fluid raised card" 
                  style="width: 28vw;">
                 <div class="content">
@@ -62,8 +62,7 @@
                     </div>
                 </div>
             </div>
-            <!--The card ends here!-->
-             
+             <div id ="mood_card" style = "display: none">
             <div class="ui fluid raised card" 
                  style="width: 28vw;">
                 <div class="content">
@@ -99,7 +98,7 @@
                         <div class="ui action fluid input">
                             <input id="uploadImage" type="file" accept="image/*">
                             
-                            <button class="ui teal labeled icon button">
+                            <button class="ui teal labeled icon button" id="upload_button">
                                 <i class="upload icon"></i>
                                 Upload
                             </button>
@@ -117,5 +116,15 @@
         <script src="static/js/modal.js"></script>
         <script src="static/js/upload.js"></script>
         <script src="static/js/semantic.min.js"></script>
+        <script>
+        $(function () {
+            $('#upload_button').click(function () {
+
+                document.getElementById("image_upload_card").style="margin-left: 5vw;";
+                document.getElementById("mood_card").style.display = "unset";
+        });
+    });
+        
+        </script>
     </body>
 </html>
