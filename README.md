@@ -1,61 +1,38 @@
-# Deep EduVision
+# Smart Classroom Analyst
 
-The project aims to provide an effective mechanism to verify the attendance being maintained in distant schools and colleges using real time images of classrooms and counting the number of students present.
+The project aims to provide deep insights into student-teacher interaction that may be used by any educational institute. It automates the reviewing process of conventional feedback systems. It takes feedback from students, not only through the textual means, but also by monitoring the parameters like their engagement during the class. It also gives the teachers scope for improvement by the analysis provided by it. Automation of this system helps in maintaining anonymity of the person giving feedback, and hence removing any bias that may be involved in conventional feedback systems.
+This project is a proof of concept of the system explained above.
 
-## Getting Started To-Do
+## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+To start using Smart Classroom Analyst, you should follow these steps:- (For Windows 8.1 and Windows 10)
+Clone the repository and get a copy into your system.
+``` 
+set GOOGLE_APPLICATION_CREDENTIALS=cred.json 
+```
+Download the following packages:-
+* python3.5 from the official website
+```
+pip install virtualenv
+pip install -r requirements.txt
+python manage.py makemigrations classroom_analyst
+python manage.py migrate
+python manage.py runserver
+```
 
 ### Prerequisites
 
-* Python 3.5+
 * Google developer account
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+* Cloud vision API by google
+* Cloud Natural language API
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+Open the web browser and go to the address:
 ```
-Give an example
+127.0.0.1:8000
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+This will take you to the index page.
 
 ## Built With
 
@@ -70,9 +47,6 @@ Add additional notes about how to deploy this on a live system
 
 (https://github.com/lordzuko/DeepEduVision) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
@@ -93,7 +67,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Developed during a hackathon hosted at PDPM IIITDM Jabalpur, sponsored by VassarLabs, Hyderabad,India
-
+* Developed during a hackathon hosted at PDPM IIITDM Jabalpur, sponsored by VassarLabs, Hyderabad,India.
 
