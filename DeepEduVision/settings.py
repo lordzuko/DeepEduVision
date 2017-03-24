@@ -29,6 +29,9 @@ ALLOWED_HOSTS = []
 
 REVIEW_ALLOW_ANONYMOUS = True
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media/'
+
 # Application definition
 
 INSTALLED_APPS = [

@@ -45,7 +45,7 @@ def save_uploaded_file(img):
 	return 'temp{}.png'.format(rndm)
 
 def class_mood(request):
-	template_name = 'mood.html'
+	template_name = 'analysis_upload.html'
 	context = {}
 	faces = []
 
@@ -53,7 +53,7 @@ def class_mood(request):
 		img, uri = '', ''
 
 		if request.FILES:
-			img = request.FILES['img']
+			img = request.FILES['uploadImage']
 			clone_img = copy.deepcopy(img)
 			filename = save_uploaded_file(clone_img)
 		else:
@@ -77,6 +77,8 @@ def class_mood(request):
 		context = {
 			'faces' : faces,
 			'head_count' : len(faces),
+			'original_img': 'media/{}'.format(filename),
+			'mod_img': 'media/mod{}'.format(filename)
 		}
 
 	return render(request, template_name, context)

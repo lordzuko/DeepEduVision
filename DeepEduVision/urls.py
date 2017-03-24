@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 	url(r'^$', TemplateView.as_view(template_name='index.html'), name="index"),
@@ -24,4 +26,4 @@ urlpatterns = [
     url(r'^attendance/', include('attendance.urls', namespace='attendance'), name='attendance'),
  	url(r'^auth/', include('auth_app.urls', namespace='auth'), name='auth'),
  	url(r'^review/', include('review.urls'), name="review"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
