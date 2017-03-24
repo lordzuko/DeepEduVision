@@ -1,6 +1,7 @@
 # Smart Classroom Analyst
 
-The project aims to provide an effective platform that may be used by any educational institute for getting feedback from students, not only through the textual means, but also by monitoring the parameters like their mood during the class. It also gives the teachers scope for improvement by the analysis provided by it. 
+The project aims to provide deep insights into student-teacher interaction that may be used by any educational institute. It automates the reviewing process of conventional feedback systems. It takes feedback from students, not only through the textual means, but also by monitoring the parameters like their engagement during the class. It also gives the teachers scope for improvement by the analysis provided by it. Automation of this system helps in maintaining anonymity of the person giving feedback, and hence removing any bias that may be involved in conventional feedback systems.
+This project is a proof of concept of the system explained above.
 
 ## Getting Started
 
