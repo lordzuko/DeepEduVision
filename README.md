@@ -3,6 +3,9 @@
 The project aims to provide deep insights into student-teacher interaction that may be used by any educational institute. It automates the reviewing process of conventional feedback systems. It takes feedback from students, not only through the textual means, but also by monitoring the parameters like their engagement during the class. It also gives the teachers scope for improvement by the analysis provided by it. Automation of this system helps in maintaining anonymity of the person giving feedback, and hence removing any bias that may be involved in conventional feedback systems.
 This project is a proof of concept of the system explained above.
 
+## AWS HOSTED
+http://35.154.211.96:8000/
+
 ## Getting Started
 
 To start using Smart Classroom Analyst, you should follow these steps:- (For Windows 8.1 and Windows 10)
@@ -12,7 +15,7 @@ set GOOGLE_APPLICATION_CREDENTIALS=cred.json
 ```
 Download the following packages:-
 * python3.5 from the official website
-```
+```	
 pip install virtualenv
 pip install -r requirements.txt
 python manage.py makemigrations classroom_analyst
