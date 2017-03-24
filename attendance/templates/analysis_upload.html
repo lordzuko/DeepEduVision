@@ -1,17 +1,18 @@
-<html>
+{% load static %}
+<!doctype html>
 <head>
         
     <title>
         Picture analysis
     </title>
         
-        <link rel="stylesheet" type="text/css" href="static/css/Semantic-UI/components/reset.css">
+        <link rel="stylesheet" type="text/css" href={% static "/css/Semantic-UI/components/reset.css" %}>
         
-        <link rel="stylesheet" type="text/css" href="static/css/Semantic-UI/components/icon.css">
+        <link rel="stylesheet" type="text/css" href={% static "/css/Semantic-UI/components/icon.css" %}>
         
-        <link rel="stylesheet" type="text/css" href="static/css/Semantic-UI/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href={% static "/css/Semantic-UI/semantic.min.css" %}>
         
-        <link rel="stylesheet" type="text/css" href="static/css/animate.css">
+        <link rel="stylesheet" type="text/css" href={% static "/css/animate.css" %}>
     </head>
     <body style="margin-top:1.5vw; 
                  height: 100vh;
@@ -20,7 +21,7 @@
         <div class="ui container" style="width: 72vw;">
  
             <div class="ui huge header">
-                Upload the image to know the image mood!
+                <center> Analyze Your Classroom !</center>
             </div>
             
             <div class="ui divider"></div>
@@ -45,11 +46,19 @@
                      style="overflow: hidden;">
                                 
                     <div class="contain">
-                        <img 
-                             id="imgDisplay"  
-                             alt="Upload Image" 
-                             class="ui large centered image" 
-                             src="static/img/student.jpg">
+                        {% if original_img %}
+                            <img 
+                                 id="imgDisplay"  
+                                 alt="Upload Image" 
+                                 class="ui large centered image" 
+                                 src="/{{ original_img }}">
+                        {% else %}
+                            <img 
+                                 id="imgDisplay"  
+                                 alt="Upload Image" 
+                                 class="ui large centered image" 
+                                 src={% static "/img/student.jpg" %}>
+                        {% endif %}
 
                          <div class="overlay">
                              <div class="button">
@@ -67,7 +76,7 @@
                  style="width: 28vw;">
                 <div class="content">
                     <div class="ui large header"> 
-                        Mood!
+                        Analysis
                     </div>
 
                     <div class="meta"></div>
@@ -75,16 +84,22 @@
                 <!--The header ends here!-->
                             
                 <div class="image">
-                    <!--TODO whatever you need to do!-->
-                    <!--Server Scripting here!!!-->            
+                    <div class="contain">
+                        {% if mod_img %}
+                            <img 
+                                 id="imgAnalysis"  
+                                 alt="Upload Image" 
+                                 class="ui large centered image" 
+                                 src="/{{ mod_img }}">
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
             <!--The card ends here!-->
-            
-        </div><!--Both cards end here!-->
+    </div><!--Both cards end here!-->
         
-        
+
         <!--The mail me modal starts here!-->
         <div class="ui modal">
             <div class="header">
@@ -95,15 +110,18 @@
                 <div class="description">
                     <div class="ui form">
                     
-                        <div class="ui action fluid input">
-                            <input id="uploadImage" type="file" accept="image/*">
-                            
-                            <button class="ui teal labeled icon button" id="upload_button">
-                                <i class="upload icon"></i>
-                                Upload
-                            </button>
-                            
-                        </div>
+                        <form action="." method="post" enctype="multipart/form-data">
+                            <div class="ui action fluid input">
+                                {% csrf_token %}
+
+                                <input id="uploadImage" type="file" name="uploadImage" accept="image/*">
+                                
+                                <button type="submit" class="ui teal labeled icon button"  id="upload_button">
+                                    <i class="upload icon"></i>
+                                    Upload
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -112,19 +130,17 @@
 
 
         <!--The javascripts!-->
-        <script src="static/js/jquery-3.2.0.min.js"></script>
-        <script src="static/js/modal.js"></script>
-        <script src="static/js/upload.js"></script>
-        <script src="static/js/semantic.min.js"></script>
+        <script src={% static "js/jquery-3.2.0.min.js" %}></script>
+        <script src={% static "js/modal.js" %}></script>
+        <script src={% static "js/upload.js" %}></script>
+        <script src={% static "js/semantic.min.js" %}></script>
         <script>
-        $(function () {
-            $('#upload_button').click(function () {
-
-                document.getElementById("image_upload_card").style="margin-left: 5vw;";
-                document.getElementById("mood_card").style.display = "unset";
-        });
-    });
-        
+            $(document).ready(function(){
+                {% if mod_img %}
+                    $('#image_upload_card').css('margin-left', '5vw');
+                    $("#mood_card").css('display', 'unset');
+                {% endif %}
+            });
         </script>
     </body>
 </html>

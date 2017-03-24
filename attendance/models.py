@@ -6,11 +6,11 @@ def upload_in_profiles(instance, filename):
 	"""
 	Returns path to profiles directory
 	"""
-	return 'profiles/user_{0}/{1}'.format(instance.user.id, filename)
+	return 'media/profiles/{0}/{1}'.format(instance.user.id, filename)
 
 class Faculty(models.Model):
 	"""
-	class to store Student Profile
+	class to store Faculty Profile
 
 	Fields - 
 		- user : Foreign key to User
@@ -19,11 +19,12 @@ class Faculty(models.Model):
 		- profile_img : Profile Picture
 	"""
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	first_name = models.CharField(max_length=30, null=True)
-	last_name = models.CharField(max_length=30, null=True)
-	profile_img = models.ImageField(upload_to=upload_in_profiles, null=True)
-	about_me = models.CharField(max_length=150)
-	contact = models.IntegerField(null=True)
+	first_name = models.CharField(max_length=30, null=True, blank=True)
+	last_name = models.CharField(max_length=30, null=True, blank=True)
+	profile_img = models.ImageField(upload_to=upload_in_profiles, null=True, blank=True)
+	about_me = models.CharField(max_length=150, null=True, blank=True)
+	contact = models.IntegerField(null=True, blank=True)
+	updated_at = models.DateTimeField(auto_now=True)
 
 	class Meta:
 		db_table = 'faculty'
