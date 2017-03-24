@@ -32,6 +32,8 @@ REVIEW_ALLOW_ANONYMOUS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'
 
+LOGIN_REDIRECT_URL = '/attendance/mood_analysis/'
+
 # Application definition
 
 INSTALLED_APPS = [

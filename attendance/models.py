@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
+from review.models import *
 
 def upload_in_profiles(instance, filename):
 	"""
@@ -21,9 +22,12 @@ class Faculty(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	first_name = models.CharField(max_length=30, null=True, blank=True)
 	last_name = models.CharField(max_length=30, null=True, blank=True)
-	profile_img = models.ImageField(upload_to=upload_in_profiles, null=True, blank=True)
+	profile_img = models.ImageField(upload_to=upload_in_profiles, null=True, blank=True, default='/attendance/static/img/dummy.png')
 	about_me = models.CharField(max_length=150, null=True, blank=True)
 	contact = models.IntegerField(null=True, blank=True)
+	positive_reviews = models.IntegerField(null=True, blank=True, default=0)
+	neutral_reviews = models.IntegerField(null=True, blank=True, default=0)
+	negative_reviews = models.IntegerField(null=True, blank=True, default=0)
 	updated_at = models.DateTimeField(auto_now=True)
 
 	class Meta:

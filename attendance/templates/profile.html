@@ -20,7 +20,7 @@
             body{
  
                 height: 100vh;
-                overflow-y: hidden;
+                overflow-y: scroll;
                 
                 font-family: sans-serif;
                 font-size: 16px;
@@ -28,6 +28,11 @@
             
             .icon a, .custom{
                 color: white;
+            }
+
+            .container {
+              width: 80%;
+              margin: 15px auto;
             }            
         </style>     
     </head>
@@ -56,11 +61,15 @@
             Right, and 
             Central.
 
--->
+-->     {% if request.user.is_authenticated %}
+            <a class="ui button right" style="margin-top: 2%; margin-left: 99%;" href="/auth/logout/">Logout</a>
+        {% else %}
+            <a class="ui button right" style="margin-top: 2%; margin-left: 99%;" href="/auth/login/">Login</a>
+        {% endif %}
+
         <div class="ui segment" 
              style="margin-top: 2.5vw;
                     margin-left: 16vw;">
-            
             
 <!--
 
@@ -86,7 +95,7 @@
                     <div class="ui fluid raised card">
                         <div class="content">
                             <div class="ui huge header"> 
-                                    Faculty Name
+                                    {{ faculty.first_name }} {{ faculty.last_name }}
                             </div>
                         </div>
                             <!--The header ends here!-->
@@ -95,7 +104,7 @@
                                  style="overflow: hidden; ">
                                 
                                 <div class="contain">
-                                    <img class="ui huge image" src="/{{ faculty.profile_img }}">
+                                    <img class="ui huge image" src="/media/{{ faculty.profile_img }}">
                                 </div>
                             </div>
                             
@@ -189,10 +198,10 @@
 
                                 {% if is_editable %}
                                 <div class="right floated">
-                                    <button id="edit-about-me" class="ui mini red circular button">
+                                    <a href="edit" id="edit-about-me" class="ui mini red circular button">
                                         <i class="edit icon"></i>
                                         Edit
-                                    </button>
+                                    </a>
                                 </div>
                                 {% endif %}
                             </div>
@@ -289,20 +298,24 @@
                             </form>
                                 <div class="ui divider"></div>
                                 
-                                <div class="ui fluid raised card">
-                                    <div class="content">
-                                        <div class="ui header">
-                                            Feedbacks & Reviews
-                                        </div>    
-                                    </div>
-                                    
-                                {% for review in reviews %}
+                            <div class="ui fluid raised card">
                                 <div class="content">
+                                    <div class="ui header">
+                                        Feedbacks & Reviews
+                                    </div>    
+                                </div>
+                                
+                                {% for review in reviews %}
+                                <div class="content" id="review-list">
                                     <div style="font-size: 14pt;">
                                         " {{ review.content }} "
                                     </div>
                                 </div>
                                 {% endfor %}
+                            </div>
+
+                            <div>
+                                <canvas id="doughnutChart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -329,7 +342,7 @@
         <script src={% static "js/jquery-3.2.0.min.js" %}></script>
         <script src={% static "js/semantic.min.js" %}></script>
         <script src={% static "js/tab.js" %}></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
         
     </body>
 </html>
@@ -340,7 +353,7 @@
         var data = "content="+review_text;
 
         $.ajax({
-            url : '/review/faculty/{{faculty.user.id}}/create/',
+            url : '/review/faculty/{{faculty.id}}/create/',
             type : 'POST',
             data: data,
             beforeSend: function(xhr) {
@@ -353,4 +366,26 @@
             }
         })
     });
+
+    var data = [parseInt("{{ faculty.positive_reviews }}"), parseInt("{{ faculty.neutral_reviews }}"), parseInt("{{ faculty.negative_reviews }}")];
+
+    var doughnutChart = function() {
+      var ctx = document.getElementById("doughnutChart").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ["Positive", "Negative", "Neutral"],
+          datasets: [{
+            backgroundColor: [
+              "#2ecc71",
+              "#3498db",
+              "#95a5a6",
+            ],
+            data: data
+          }]
+        }
+      });
+    }
+
+    doughnutChart();
 </script>

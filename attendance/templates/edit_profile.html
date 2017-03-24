@@ -1,0 +1,224 @@
+{% load static %}
+<!doctype html>
+    <html>
+    <head>
+        <title>
+            Profile
+        </title>
+        
+                
+        <link rel="stylesheet" type="text/css" href={%static "css/Semantic-UI/components/reset.css" %}>
+        
+        <link rel="stylesheet" type="text/css" href={%static "css/Semantic-UI/components/icon.css" %}>
+        
+        <link rel="stylesheet" type="text/css" href={%static "css/Semantic-UI/semantic.min.css" %}>
+        
+        <link rel="stylesheet" type="text/css" href={%static "css/animate.css" %}>
+        
+        <style>
+            
+            body{
+ 
+                height: 100vh;
+                overflow-y: scroll;
+                
+                font-family: sans-serif;
+                font-size: 16px;
+            }
+            
+            .icon a, .custom{
+                color: white;
+            }            
+        </style>     
+    </head>
+    
+    <body class="ui container">   
+    
+<!--
+
+    The mail me modal developed i Semantic-UI.
+    This modal is triggered by 
+        the mail me icon circular button, and
+        the overlay image button.
+
+    The semantic-UI jQuery in present in the "js/tab.js"
+
+-->
+        
+<!--
+
+    The main content of the webpage begins here!
+        The following code includes 
+        "Semantic-UI: RAIL."
+
+        The Rail divides the page into three sections:
+            Left,
+            Right, and 
+            Central.
+
+-->     {% if request.user.is_authenticated %}
+            <a class="ui button right" style="margin-top: 2%; margin-left: 99%;" href="/auth/logout/">Logout</a>
+        {% else %}
+            <a class="ui button right" style="margin-top: 2%; margin-left: 99%;" href="/auth/login/">Login</a>
+        {% endif %}
+
+        <form action="." method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="ui segment" 
+             style="margin-top: 2.5vw;
+                    margin-left: 16vw;">
+            <div class="ui left dividing rail"
+                 style="width: 24vw;">
+                
+                <div class="ui segment">
+                    <div class="ui fluid raised card">
+                        <div class="content">
+                            <div class="ui header"> 
+                                    First Name: <input type="text" name="first_name" value="{{ faculty.first_name }}"><br><br>
+                                    Last Name: <input type="text" name="last_name" value="{{ faculty.last_name }}"><br>
+                            </div>
+                        </div>
+                            <!--The header ends here!-->
+                            
+                            <div class="image" 
+                                 style="overflow: hidden; ">
+                                
+                                <div class="contain">
+                                    <img src="/media/{{ faculty.profile_img }}" class="ui huge image">
+                                    <input type="file" name="profile_img" accept="image/*">
+                                </div>
+                            </div>
+                            
+                        </div>
+
+            <!--
+
+                The vertical menu which is a part of the left segment of the Semantic-Ui: Rail starts here!
+
+                The vertical menu has Sematic-UI: Tabs.
+                These tabs trigger content i the central rail segment
+
+            -->
+                </div>
+            </div><!--The left rail ends here!-->
+            
+ <!--
+        The right rails segment of the Semantic-UI: Rail 
+        starts here!
+
+        The right rails segment contains:
+            the vertical (stackable) icon buttons
+            
+            These buttons create a link of the user with their resective
+            social media accounts and other such importan websites!
+        
+            The mail icon button triggers the Mail me MODAL
+            
+ -->
+
+            <div class="ui right very close rail"
+                 style="width: 2.5vw;">
+                    
+                <div class="stackable">
+                    <br>
+                    <!--TODO-->
+                    <button class="ui massive circular facebook icon button">
+                        <a href="https://www.facebook.com/"
+                           target="_blank">
+                            <i class="facebook icon"></i>
+                        </a>
+                    </button>
+
+                    <br>
+                    <br>
+                    <button class="ui massive red circular mail icon button" onclick="modal()">
+                        <i class="mail icon"></i>
+                    </button>
+                </div>
+                
+            </div><!--The right rails ends here!-->
+            
+<!--
+    
+        The central rail segment of the Semantic-UI contains the Semantic-UI: Tabs'content.
+
+        These tabs are triggered by the vertical menu in the left rail segment.
+
+-->            
+
+            <div class="center rail">
+                <!--The tabcontent about starts here!-->
+                <div class="ui active tab segment" data-tab="first">
+
+                    <!--About Me card starts here!-->
+                    <div class="ui fluid card">
+                        <div class="content">
+                            <div class="ui header">
+                                About Me
+                            </div>
+                            <div class="ui divider"></div>
+                                <span>
+                                <p style="word-break:break-all;">
+                                    <textarea name="about_me" rows="8" cols="100">{{ faculty.about_me }}</textarea>
+                                </p>
+                              </span>
+                        </div>
+                    </div><!--About Me card ends here!-->
+
+                    <!--The contact details card starts here!-->
+                    <div class="ui fluid card">
+                        <div class="content">
+                            <div class="ui header">Contact Details</div>
+                            <div class="ui divider"></div>
+                                
+                            <span>
+                                <table class="ui definition table">
+                                    <tbody>
+                                        
+                                        <tr>
+                                            <td>
+                                                Contact    
+                                            </td>
+                                            
+                                            <td>
+                                                <a>
+                                                   <i class="phone icon"></i>
+                                                    <input type="number" name="contact" value="{{ faculty.contact }}">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>
+                                                Mail    
+                                            </td>
+                                             
+                                            <td>
+                                                
+                                               <i class="mail icon"></i>
+                                                <input type="email" name="email" value="{{ faculty.user.email }}">
+                                            
+                                                
+                                            </td>
+                                        </tr>  
+                                    </tbody>
+                                </table>
+                            </span>
+                        </div>
+                    </div><!--The contact details card ends here!-->
+
+                </div><!--The tabcontent About ends here!-->
+        
+                <center>
+                    <button type="submit" class="ui huge button" id="edit">Edit Changes</button>
+
+                </center>
+                </form>
+        <!--The javascripts!-->
+        <script src={% static "js/jquery-3.2.0.min.js" %}></script>
+        <script src={% static "js/semantic.min.js" %}></script>
+        <script src={% static "js/tab.js" %}></script>
+
+        
+    </body>
+</html>
