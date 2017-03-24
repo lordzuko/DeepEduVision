@@ -76,13 +76,66 @@ def class_mood(request):
 
 		build_faces_border_all(vertices, filename)
 
-		context = {
+		
+		#print (dir(faces[0].sorrow), dir(faces[0].emotions), len(faces), sep="\n")
+		avg_joy = 0
+		avg_sorrow = 0
+		avg_anger = 0
+		avg_surprise = 0
+		for face in faces:
+			if face.joy.name == "VERY_LIKELY":
+				avg_joy=avg_joy+10
+			elif face.joy.name == "LIKELY":
+				avg_joy=avg_joy+7.5
+			elif face.joy.name == "POSSIBLE":
+				avg_joy=avg_joy+5
+			elif face.joy.name == "UNLIKELY":
+				avg_joy=avg_joy+2.5
+			elif face.joy.name == "VERY_UNLIKELY":
+				avg_joy=avg_joy+0
+			if face.sorrow.name == "VERY_LIKELY":
+				avg_sorrow=avg_sorrow+10
+			elif face.sorrow.name == "LIKELY":
+				avg_sorrow=avg_sorrow+7.5
+			elif face.sorrow.name == "POSSIBLE":
+				avg_sorrow=avg_sorrow+5
+			elif face.sorrow.name == "UNLIKELY":
+				avg_sorrow=avg_sorrow+2.5
+			elif face.sorrow.name == "VERY_UNLIKELY":
+				avg_sorrow=avg_sorrow+0
+			if face.anger.name == "VERY_LIKELY":
+				avg_anger=avg_anger+10
+			elif face.anger.name == "LIKELY":
+				avg_anger=avg_anger+7.5
+			elif face.anger.name == "POSSIBLE":
+				avg_anger=avg_anger+5
+			elif face.anger.name == "UNLIKELY":
+				avg_anger=avg_anger+2.5
+			elif face.anger.name == "VERY_UNLIKELY":
+				avg_anger=avg_anger+0
+			if face.surprise.name == "VERY_LIKELY":
+				avg_surprise=avg_surprise+10
+			elif face.surprise.name == "LIKELY":
+				avg_surprise=avg_surprise+7.5
+			elif face.surprise.name == "POSSIBLE":
+				avg_surprise=avg_surprise+5
+			elif face.surprise.name == "UNLIKELY":
+				avg_surprise=avg_surprise+2.5
+			elif face.surprise.name == "VERY_UNLIKELY":
+				avg_surprise=avg_surprise+0
+
+			averages = (avg_joy/len(faces),avg_sorrow/len(faces),avg_anger/len(faces),avg_surprise/len(faces))
+			context = {
 			'faces' : faces,
 			'head_count' : len(faces),
 			'original_img': 'media/{}'.format(filename),
-			'mod_img': 'media/mod{}'.format(filename)
-		}
+			'mod_img': 'media/mod{}'.format(filename),
+			'avg_joy': averages[0],
+			'avg_sorrow': averages[1],
+			'avg_anger': averages[2],
+			'avg_surprise': averages[3],
 
+		}
 	return render(request, template_name, context)
 
 
