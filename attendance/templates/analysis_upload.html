@@ -16,7 +16,7 @@
     </head>
     <body style="margin-top:1.5vw; 
                  height: 100vh;
-                 overflow-y: hidden;">
+                 overflow-y: scroll;">
         
         <div class="ui container" style="width: 72vw;">
  
@@ -35,7 +35,7 @@
                  style="width: 28vw;">
                 <div class="content">
                     <div class="ui large header"> 
-                        Upload Photo
+                        Upload Image
                     </div>
 
                     <div class="meta"></div>
@@ -127,7 +127,78 @@
             </div>
         </div>
         <!--The mail me modal ends here!-->
-
+        <!--Table for showing emotions !-->
+        <table class="ui celled structured table">
+            <thead>
+                <tr>
+                  <th rowspan="2">Total Faces = {{head_count}}</th>
+                  <th colspan="4"><center>Emotions</center></th>
+                </tr>
+                <tr>
+                  <th>Joy</th>
+                  <th>Sorrow</th>
+                  <th>Anger</th>
+                  <th>Surprise</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for face in faces %}
+                <tr>
+                  <td>Face {{forloop.counter}}</td>
+                  <td>
+                  {% if face.joy.name == "LIKELY" or face.joy.name == "VERY_LIKELY" %}
+                    <i class="large green checkmark icon center"></i>
+                  {% elif face.joy.name == "POSSIBLE" %}
+                    <i class="large yellow checkmark icon center"></i>
+                  {% else %}
+                    <i class="large red close icon center"></i>
+                  {%endif%}
+                  </td>
+                  <td>
+                  {% if face.sorrow.name == "LIKELY" or face.sorrow.name == "VERY_LIKELY" %}
+                    <i class="large green checkmark icon center"></i>
+                  {% elif face.sorrow.name == "POSSIBLE" %}
+                    <i class="large yellow checkmark icon center"></i>
+                  {% else %}
+                    <i class="large red close icon center"></i>
+                  {%endif%}
+                  </td>
+                  <td>
+                  {% if face.anger.name == "LIKELY" or face.anger.name == "VERY_LIKELY" %}
+                    <i class="large green checkmark icon center"></i>
+                  {% elif face.anger.name == "POSSIBLE" %}
+                    <i class="large yellow checkmark icon center"></i>
+                  {% else %}
+                    <i class="large red close icon center"></i>
+                  {%endif%}
+                  </td>
+                  <td>
+                  {% if face.surprise.name == "LIKELY" or face.surprise.name == "VERY_LIKELY" %}
+                    <i class="large green checkmark icon center"></i>
+                  {% elif face.surprise.name == "POSSIBLE" %}
+                    <i class="large yellow checkmark icon center"></i>
+                  {% else %}
+                    <i class="large red close icon center"></i>
+                  {%endif%}
+                  </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                <td>Complete Analysis</td>
+                <td>{{avg_joy}}</td>
+                <td>{{avg_sorrow}}</td>
+                <td>{{avg_anger}}</td>
+                <td>{{avg_surprise}}</td>
+                </tr>
+              </tbody>
+            </table>
+<!--        {% for face in faces %}
+            {{ face.joy }}
+            {{ face.sorrow }}
+            {{ face.surprise }}
+            {{ face.emotions }}
+        {% endfor %}
+!-->
 
         <!--The javascripts!-->
         <script src={% static "js/jquery-3.2.0.min.js" %}></script>
