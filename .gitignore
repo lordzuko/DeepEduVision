@@ -48,5 +48,8 @@ Temporary Items
 
 #Django & Python
 *.pyc
-attendance/__pycache__/
-DeepEduVision/__pycache__/
+attendance/__pycache__/*
+DeepEduVision/__pycache__/*
+
+db.sqlite3
+attendance/migrations/*
