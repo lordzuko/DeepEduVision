@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+REVIEW_ALLOW_ANONYMOUS = True
 
 # Application definition
 
@@ -39,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'attendance',
     'auth_app',
+    'hvad',
+    'review',
+    'user_media',
+    'generic_positions',
 ]
 
 MIDDLEWARE = [

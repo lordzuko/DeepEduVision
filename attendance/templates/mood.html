@@ -1,3 +1,4 @@
+
 <form action="/attendance/mood/" method="post" enctype="multipart/form-data">
 
 	{%  csrf_token %}
@@ -18,3 +19,5 @@
 	{{ l.emotions.anger }}
 
 {% endfor %}
+
+<a href="{% url "review_create" content_type='faculty' object_id=1 %}">Do it !</a>

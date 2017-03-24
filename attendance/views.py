@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from .forms import StudentForm, AttendanceForm
 
 from google.cloud import vision
 from PIL import Image, ImageFont, ImageDraw
