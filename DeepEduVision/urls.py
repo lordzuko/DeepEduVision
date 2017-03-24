@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^attendance/', include('attendance.urls', namespace='attendance'), name='attendance'),
  	url(r'^auth/', include('auth_app.urls', namespace='auth'), name='auth'),
+ 	url(r'^review/', include('review.urls'), name="review"),
 ]
