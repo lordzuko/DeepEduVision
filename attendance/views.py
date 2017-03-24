@@ -28,24 +28,26 @@ def build_faces_border(vertex,dr):
 
 
 def build_faces_border_all(vertices, path):
-	im = Image.open(path)
+	im = Image.open("media/{}".format(path))
 	dr = ImageDraw.Draw(im)
 
 	for vertex in vertices:
 		vertex = (vertex[0],vertex[2])
 		build_faces_border(vertex, dr)
 
-	im.save("rectangle.png")
+	im.save("media/mod{0}".format(path))
 
 def save_uploaded_file(img):
 	rndm = random.random()
-	with open('temp{}.png'.format(rndm), 'wb+') as dest:
+	with open('media/temp{}.png'.format(rndm), 'wb+') as dest:
 		for chunk in img.chunks():
 			dest.write(chunk)
 
 	return 'temp{}.png'.format(rndm)
 
 def class_mood(request):
+	template_name = 'mood.html'
+	context = {}
 	faces = []
 
 	if request.method == 'POST':
@@ -53,8 +55,8 @@ def class_mood(request):
 
 		if request.FILES:
 			img = request.FILES['img']
-			t = copy.deepcopy(img)
-			filename = save_uploaded_file(t)
+			clone_img = copy.deepcopy(img)
+			filename = save_uploaded_file(clone_img)
 		else:
 			uri = request.POST['link']
 			rndm = random.random()
@@ -71,8 +73,11 @@ def class_mood(request):
 
 		vertices = get_vertices(faces)
 
-		print(vertices)
-
 		build_faces_border_all(vertices, filename)
 
-	return render(request, 'mood.html', {'content' : faces})
+		context = {
+			'faces' : faces,
+			'head_count' : len(faces),
+		}
+
+	return render(request, template_name, context)
