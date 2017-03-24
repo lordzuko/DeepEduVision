@@ -23,7 +23,7 @@ urlpatterns = [
 	url(r'^$', TemplateView.as_view(template_name='index.html'), name="index"),
     url(r'^analysis$', TemplateView.as_view(template_name='analysis_upload.html'), name="analysis_upload"),
     url(r'^admin/', admin.site.urls),
-    url(r'^attendance/', include('attendance.urls', namespace='attendance'), name='attendance'),
+    url(r'^classroom_analyst/', include('classroom_analyst.urls', namespace='classroom_analyst'), name='classroom_analyst'),
  	url(r'^auth/', include('auth_app.urls', namespace='auth'), name='auth'),
  	url(r'^review/', include('review.urls'), name="review"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

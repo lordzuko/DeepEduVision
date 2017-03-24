@@ -32,7 +32,7 @@ REVIEW_ALLOW_ANONYMOUS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'
 
-LOGIN_REDIRECT_URL = '/attendance/mood_analysis/'
+LOGIN_REDIRECT_URL = '/classroom_analyst/mood_analysis/'
 
 # Application definition
 
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'attendance',
+    'classroom_analyst',
     'auth_app',
     'hvad',
     'review',

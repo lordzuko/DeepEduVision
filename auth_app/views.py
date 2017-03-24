@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm
 
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 
-from attendance.models import Faculty
+from classroom_analyst.models import Faculty
 
 def join(request):
 	template_name = 'join.html'

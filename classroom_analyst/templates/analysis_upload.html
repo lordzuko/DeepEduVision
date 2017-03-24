@@ -1,0 +1,301 @@
+{% load static %}
+<!doctype html>
+<head>
+        
+    <title>
+        Picture analysis
+    </title>
+        
+        <link rel="stylesheet" type="text/css" href={% static "/css/Semantic-UI/components/reset.css" %}>
+        
+        <link rel="stylesheet" type="text/css" href={% static "/css/Semantic-UI/components/icon.css" %}>
+        
+        <link rel="stylesheet" type="text/css" href={% static "/css/Semantic-UI/semantic.min.css" %}>
+        
+        <link rel="stylesheet" type="text/css" href={% static "/css/animate.css" %}>
+    </head>
+    <body style="margin-top:1.5vw; 
+                 height: 100vh;
+                 overflow-y: scroll;">
+
+                 <div class="ui container">        
+            <div class="ui massive secondary pointing menu">
+                <a class="item"></a>
+                
+                <a class="active item" 
+                   href="/">
+                    Home
+                </a>
+                
+                <a class="item"></a>
+  
+                <a class="item"
+                   href="/classroom_analyst/mood_analysis/">
+                    Analyze
+                </a>
+                
+                <a class="item"></a>
+                <a class="item"></a>
+                <a class="item"></a>
+                <a class="item"></a>
+                <a class="item"></a>
+                <a class="item"></a>
+                
+                <a class="ui item"
+                   href ="/classroom_analyst/profiles/{{request.user.id}}">
+                    Profile
+                </a>    
+                
+                <div class="right menu">
+                    <a class="item"></a>
+
+                    <a class="ui item"
+                       href="/auth/logout/">
+                        Logout
+                    </a>
+                    
+                    <a class="item"></a>
+                </div>    
+            </div>
+        </div>
+        
+        <div class="ui container" style="margin-top:2%; width: 72vw;">
+ 
+            <div class="ui huge header">
+                <center> Analyze Your Classroom !</center>
+            </div>
+            
+            <div class="ui divider"></div>
+            
+            <br>
+            <br>
+            <br>
+            <center>
+            <div class="preloader" 
+                 style=" width: 48vw;
+                        margin-left: 24vw; display: none;" id="preloader">        
+                <div class="ui icon message">
+                    <i class="notched circle loading icon"></i>
+                        <div class="content">
+                            <div class="header">
+                                Just one second
+                            </div>
+                            <p>
+                                We're fetching that content for you.
+              <br> Tip! Use High-Reesolution Images for error-free results.
+                            </p>
+                        </div>
+                </div>
+            </div>
+            </center>
+        <div class="ui two cards" style="margin-left: 20vw;" id="image_upload_card">    
+            <div class="ui fluid raised card" 
+                 style="width: 28vw;">
+                <div class="content">
+                    <div class="ui large header"> 
+                        Upload Image
+                    </div>
+
+                    <div class="meta"></div>
+                </div>
+                <!--The header ends here!-->
+                            
+                <div class="image" 
+                     style="overflow: hidden;">
+                                
+                    <div class="contain">
+                        {% if original_img %}
+                            <img 
+                                 id="imgDisplay"  
+                                 alt="Upload Image" 
+                                 class="ui large centered image" 
+                                 src="/{{ original_img }}">
+                        {% else %}
+                            <img 
+                                 id="imgDisplay"  
+                                 alt="Upload Image" 
+                                 class="ui large centered image" 
+                                 src={% static "/img/student.jpg" %}>
+                        {% endif %}
+
+                         <div class="overlay">
+                             <div class="button">
+                                 <button class="ui primary button" id="upload_modal" onclick="modal()">
+                                     <i class="upload icon"></i>
+                                     Upload Image
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div id ="mood_card" style = "display: none">
+            <div class="ui fluid raised card" 
+                 style="width: 28vw;">
+                <div class="content">
+                    <div class="ui large header"> 
+                        Analysis
+                    </div>
+
+                    <div class="meta"></div>
+                </div>
+                <!--The header ends here!-->
+                            
+                <div class="image">
+                    <div class="contain">
+                        {% if mod_img %}
+                            <img 
+                                 id="imgAnalysis"  
+                                 alt="Upload Image" 
+                                 class="ui large centered image" 
+                                 src="/{{ mod_img }}">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!--The card ends here!-->
+    </div><!--Both cards end here!-->
+        
+
+        <!--The mail me modal starts here!-->
+        <div class="ui modal">
+            <div class="header">
+                Upload Image
+            </div>
+            
+            <div class="image content">
+                <div class="description">
+                    <div class="ui form">
+                    
+                        <form action="." method="post" enctype="multipart/form-data">
+                            <div class="ui action fluid input">
+                                {% csrf_token %}
+
+                                <input id="uploadImage" type="file" name="uploadImage" accept="image/*">
+                                
+                                <button type="submit" class="ui teal labeled icon button"  id="upload_button">
+                                    <i class="upload icon"></i>
+                                    Upload
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--The mail me modal ends here!-->
+        <!--Table for showing emotions !-->
+        <table class="ui celled structured table">
+            <thead>
+                <tr>
+                  <th rowspan="2">Total Faces = {{head_count}}</th>
+                  <th colspan="4"><center>Emotions</center></th>
+                </tr>
+                <tr>
+                  <th>Joy</th>
+                  <th>Sorrow</th>
+                  <th>Anger</th>
+                  <th>Surprise</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for face in faces %}
+                <tr>
+                  <td>Face {{forloop.counter}}</td>
+                  <td>
+                  {% if face.joy.name == "LIKELY" or face.joy.name == "VERY_LIKELY" %}
+                    <i class="large green checkmark icon center"></i>
+                  {% elif face.joy.name == "POSSIBLE" %}
+                    <i class="large yellow checkmark icon center"></i>
+                  {% else %}
+                    <i class="large red close icon center"></i>
+                  {%endif%}
+                  </td>
+                  <td>
+                  {% if face.sorrow.name == "LIKELY" or face.sorrow.name == "VERY_LIKELY" %}
+                    <i class="large green checkmark icon center"></i>
+                  {% elif face.sorrow.name == "POSSIBLE" %}
+                    <i class="large yellow checkmark icon center"></i>
+                  {% else %}
+                    <i class="large red close icon center"></i>
+                  {%endif%}
+                  </td>
+                  <td>
+                  {% if face.anger.name == "LIKELY" or face.anger.name == "VERY_LIKELY" %}
+                    <i class="large green checkmark icon center"></i>
+                  {% elif face.anger.name == "POSSIBLE" %}
+                    <i class="large yellow checkmark icon center"></i>
+                  {% else %}
+                    <i class="large red close icon center"></i>
+                  {%endif%}
+                  </td>
+                  <td>
+                  {% if face.surprise.name == "LIKELY" or face.surprise.name == "VERY_LIKELY" %}
+                    <i class="large green checkmark icon center"></i>
+                  {% elif face.surprise.name == "POSSIBLE" %}
+                    <i class="large yellow checkmark icon center"></i>
+                  {% else %}
+                    <i class="large red close icon center"></i>
+                  {%endif%}
+                  </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                <td>Complete Analysis</td>
+                <td>{{avg_joy}}</td>
+                <td>{{avg_sorrow}}</td>
+                <td>{{avg_anger}}</td>
+                <td>{{avg_surprise}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div>
+              <canvas id="pieChart"></canvas>
+            </div>
+        <!--The javascripts!-->
+        <script src={% static "js/jquery-3.2.0.min.js" %}></script>
+        <script src={% static "js/modal.js" %}></script>
+        <script src={% static "js/upload.js" %}></script>
+        <script src={% static "js/semantic.min.js" %}></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+        
+        <script>
+            $(document).ready(function(){
+                {% if mod_img %}
+                    $('#image_upload_card').css('margin-left', '5vw');
+                    $("#mood_card").css('display', 'unset');
+                    $('#preloader').css('display', 'none');
+                {% endif %}
+            });
+
+            $(document).on('click', '#upload_modal', function(){
+              $('#preloader').css('display', 'block');
+            });
+
+            var data = [parseInt("{{ avg_joy }}"), parseInt("{{ avg_surprise }}"), parseInt("{{ avg_sorrow }}"), parseInt("{{ avg_anger }}")];
+
+            var pieChart= function(){
+            var ctx = document.getElementById("pieChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+              type: 'pie',
+              data: {
+                labels: ["Joy", "Surprise", "Sorrow", "Anger"],
+                datasets: [{
+                  backgroundColor: [
+                    "#2ecc71",
+                    "#3498db",
+                    "#95a5a6",
+                    "#9b59b6"
+                  ],
+                  data: data
+                }]
+              }
+            });
+          }
+
+          pieChart();
+        </script>
+    </body>
+</html>
