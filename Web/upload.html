@@ -45,7 +45,11 @@
                      style="overflow: hidden;">
                                 
                     <div class="contain">
-                        <img class="ui large centered image" src="img/student.jpg">
+                        <img 
+                             id="imgDisplay"  
+                             alt="Upload Image" 
+                             class="ui large centered image" 
+                             src="img/student.jpg">
 
                          <div class="overlay">
                              <div class="button">
@@ -71,10 +75,9 @@
                 </div>
                 <!--The header ends here!-->
                             
-                <div class="image" 
-                     style="overflow: hidden;">
-                                
+                <div class="image">
                     <!--TODO whatever you need to do!-->
+                    <!--Server Scripting here!!!-->            
                 </div>
             </div>
         </div>
@@ -94,7 +97,7 @@
                     <div class="ui form">
                     
                         <div class="ui action fluid input">
-                            <input type="text">
+                            <input id="uploadImage" type="file" accept="image/*">
                             
                             <button class="ui teal labeled icon button">
                                 <i class="upload icon"></i>
@@ -112,5 +115,7 @@
         <!--The javascripts!-->
         <script src="js/jquery-3.2.0.min.js"></script>
         <script src="js/modal.js"></script>
+        <script src="js/upload.js"></script>
         <script src="js/semantic.min.js"></script>
     </body>
+</html>
