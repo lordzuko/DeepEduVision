@@ -1,0 +1,116 @@
+<html>
+<head>
+        
+    <title>
+        Student
+    </title>
+        
+        <link rel="stylesheet" type="text/css" href="css/Semantic-UI/components/reset.css">
+        
+        <link rel="stylesheet" type="text/css" href="css/Semantic-UI/components/icon.css">
+        
+        <link rel="stylesheet" type="text/css" href="css/Semantic-UI/semantic.min.css">
+        
+        <link rel="stylesheet" type="text/css" href="css/animate.css">
+    </head>
+    <body style="margin-top:1.5vw; 
+                 height: 100vh;
+                 overflow-y: hidden;">
+        
+        <div class="ui container" style="width: 72vw;">
+ 
+            <div class="ui huge header">
+                Upload the image to know the image mood!
+            </div>
+            
+            <div class="ui divider"></div>
+            
+            <br>
+            <br>
+            <br>
+            
+        <div class="ui two cards" style="margin-left: 5vw;">    
+            <div class="ui fluid raised card" 
+                 style="width: 28vw;">
+                <div class="content">
+                    <div class="ui large header"> 
+                        Upload Photo
+                    </div>
+
+                    <div class="meta"></div>
+                </div>
+                <!--The header ends here!-->
+                            
+                <div class="image" 
+                     style="overflow: hidden;">
+                                
+                    <div class="contain">
+                        <img class="ui large centered image" src="img/student.jpg">
+
+                         <div class="overlay">
+                             <div class="button">
+                                 <button class="ui primary button" onclick="modal()">
+                                     <i class="upload icon"></i>
+                                     Upload Image
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--The card ends here!-->
+             
+            <div class="ui fluid raised card" 
+                 style="width: 28vw;">
+                <div class="content">
+                    <div class="ui large header"> 
+                        Mood!
+                    </div>
+
+                    <div class="meta"></div>
+                </div>
+                <!--The header ends here!-->
+                            
+                <div class="image" 
+                     style="overflow: hidden;">
+                                
+                    <!--TODO whatever you need to do!-->
+                </div>
+            </div>
+        </div>
+            <!--The card ends here!-->
+            
+        </div><!--Both cards end here!-->
+        
+        
+        <!--The mail me modal starts here!-->
+        <div class="ui modal">
+            <div class="header">
+                Upload Image
+            </div>
+            
+            <div class="image content">
+                <div class="description">
+                    <div class="ui form">
+                    
+                        <div class="ui action fluid input">
+                            <input type="text">
+                            
+                            <button class="ui teal labeled icon button">
+                                <i class="upload icon"></i>
+                                Upload
+                            </button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--The mail me modal ends here!-->
+
+
+        <!--The javascripts!-->
+        <script src="js/jquery-3.2.0.min.js"></script>
+        <script src="js/modal.js"></script>
+        <script src="js/semantic.min.js"></script>
+    </body>
