@@ -9,7 +9,7 @@ from google.cloud import vision
 from PIL import Image, ImageFont, ImageDraw
 import urllib.request
 import io, random, copy
-
+from .sentiment_analysis import *
 from .vision_helpers import *
 
 def get_vertices(faces):
@@ -98,18 +98,57 @@ def profile(request, user_id):
 	faculty = Faculty.objects.get(user=user)
 
 	is_editable = False
+	
+	reviews = Review.objects.filter(object_id=faculty.id)
+
+	sentiment_scores = analyze(reviews)
+
+	faculty.positive_reviews = sentiment_scores[1]
+	faculty.neutral_reviews = sentiment_scores[2]
+	faculty.negative_reviews = sentiment_scores[3]
+
+	faculty.save()	
 
 	if request.user.is_authenticated():
 		if user == request.user:
 			is_editable = True
-
-	reviews = Review.objects.filter(object_id=user_id)
 
 	template_name = 'profile.html'
 	context = {
 		'faculty' : faculty,
 		'reviews' : reviews,
 		'is_editable' : is_editable
+	}
+
+	return render(request, template_name, context)
+
+@login_required(login_url='/auth/login/')
+def edit_profile(request, user_id):
+	try:
+		user = get_object_or_404(User, pk=user_id)
+	except Http404:
+		return render(request, template_name, context)
+
+	faculty = Faculty.objects.get(user=user)
+
+	if request.method=='POST':
+		faculty.first_name = request.POST.get('first_name', faculty.first_name)
+		faculty.last_name = request.POST.get('last_name', faculty.last_name)
+		faculty.email = request.POST.get('email', faculty.user.email)
+		faculty.about_me = request.POST.get('about_me', faculty.about_me)
+		faculty.contact = request.POST.get('contact', 0)
+
+		if request.FILES:
+			faculty.profile_img = request.FILES.get('profile_img')
+
+		faculty.save()
+
+		return HttpResponseRedirect('/attendance/profiles/{}/'.format(user_id))
+
+
+	template_name = 'edit_profile.html'
+	context = {
+		'faculty' : faculty
 	}
 
 	return render(request, template_name, context)
