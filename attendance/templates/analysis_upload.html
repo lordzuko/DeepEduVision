@@ -192,19 +192,17 @@
                 </tr>
               </tbody>
             </table>
-<!--        {% for face in faces %}
-            {{ face.joy }}
-            {{ face.sorrow }}
-            {{ face.surprise }}
-            {{ face.emotions }}
-        {% endfor %}
-!-->
 
+            <div>
+              <canvas id="pieChart"></canvas>
+            </div>
         <!--The javascripts!-->
         <script src={% static "js/jquery-3.2.0.min.js" %}></script>
         <script src={% static "js/modal.js" %}></script>
         <script src={% static "js/upload.js" %}></script>
         <script src={% static "js/semantic.min.js" %}></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+        
         <script>
             $(document).ready(function(){
                 {% if mod_img %}
@@ -212,6 +210,29 @@
                     $("#mood_card").css('display', 'unset');
                 {% endif %}
             });
+
+            var data = [parseInt("{{ avg_joy }}"), parseInt("{{ avg_surprise }}"), parseInt("{{ avg_sorrow }}"), parseInt("{{ avg_anger }}")];
+
+            var pieChart= function(){
+            var ctx = document.getElementById("pieChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+              type: 'pie',
+              data: {
+                labels: ["Joy", "Surprise", "Sorrow", "Anger"],
+                datasets: [{
+                  backgroundColor: [
+                    "#2ecc71",
+                    "#3498db",
+                    "#95a5a6",
+                    "#9b59b6"
+                  ],
+                  data: data
+                }]
+              }
+            });
+          }
+
+          pieChart();
         </script>
     </body>
 </html>
